@@ -1,0 +1,34 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class restartGame : MonoBehaviour {
+
+    public float restartTime;
+    bool restartNow;
+    float resetTime;
+
+    // Use this for initialization
+    void Start () {
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if(restartNow && resetTime <= Time.time)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            restartNow = false;
+        }
+	}
+
+    //restart game after restart time has passed
+    public void restartTheGame()
+    {
+        restartNow = true;
+        resetTime = Time.time + restartTime;
+        PlayerPrefs.SetFloat("PlayerCurrentHealth", PlayerPrefs.GetFloat("StartLevelHealth"));
+        PlayerPrefs.SetFloat("PlayerCurrentAmmo", PlayerPrefs.GetFloat("StartLevelAmmo"));
+        PlayerPrefs.SetFloat("PlayerCurrentChakra", PlayerPrefs.GetFloat("StartLevelChakra"));
+    }
+}
